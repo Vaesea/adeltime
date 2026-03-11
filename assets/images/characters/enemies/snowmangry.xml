@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="snowmangry.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="walk0000" x="58" y="0" width="50" height="92" frameX="-6" frameY="-5" frameWidth="64" frameHeight="96"/>
+	<SubTexture name="walk0001" x="0" y="88" width="53" height="92" frameX="-6" frameY="-5" frameWidth="64" frameHeight="96"/>
+	<SubTexture name="walk0002" x="0" y="0" width="58" height="88" frameX="-6" frameY="-9" frameWidth="64" frameHeight="96"/>
+	<SubTexture name="walk0003" x="0" y="88" width="53" height="92" frameX="-6" frameY="-5" frameWidth="64" frameHeight="96"/>
+	<SubTexture name="squished0000" x="58" y="92" width="50" height="74" frameX="-6" frameY="-24" frameWidth="64" frameHeight="96"/>
+</TextureAtlas>

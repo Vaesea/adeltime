@@ -1,5 +1,6 @@
 package states;
 
+import characters.enemies.Enemy;
 import characters.player.Adel;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -21,6 +22,9 @@ class PlayState extends FlxState
 	// Add things part 1
 	public var adel(default, null):Adel;
 	public var solidThings:FlxGroup;
+	public var enemies(default, null):FlxTypedGroup<Enemy>;
+	var hud:HUD;
+	var entities:FlxGroup;
 
 	public var checkpoint:FlxPoint;
 
@@ -29,22 +33,30 @@ class PlayState extends FlxState
 		// Just so Global.PS actually works...
 		Global.PS = this;
 
+		Global.health = Global.maxHealth;
+
 		// Add things part 2
-		solidThings = new FlxGroup();
+		entities = new FlxGroup();
+		solidThings = new FlxGroup(); // why is this not flxtypedgroup??????
+		enemies = new FlxTypedGroup<Enemy>();
 		adel = new Adel();
+		hud = new HUD();
 
 		// Set Adel's current state
 		adel.currentState = Global.adelState;
-		// adel.reloadGraphics();
+		adel.reloadGraphics();
 
 		var numberOfLevel = Global.levels[Global.currentLevel];
 
 		LevelLoader.loadLevel(this, numberOfLevel);
 
 		// Add things part 3
+		entities.add(enemies);
 		add(solidThings);
 		add(map);
+		add(entities);
 		add(adel);
+		add(hud);
 
 		// Camera
 		FlxG.camera.follow(adel, PLATFORMER);
@@ -75,6 +87,10 @@ class PlayState extends FlxState
 
 		// Adel collision
 		FlxG.collide(solidThings, adel, collideEntities);
+		FlxG.overlap(entities, adel, collideEntities);
+
+		// Entity collision
+		FlxG.collide(solidThings, entities);
 	}
 
 	function collideEntities(entity:FlxSprite, adel:Adel)
@@ -82,6 +98,11 @@ class PlayState extends FlxState
 		if (Std.isOfType(entity, Goal))
 		{
 			(cast entity).reach(adel);
+		}
+
+		if (Std.isOfType(entity, Enemy))
+		{
+			(cast entity).interact(adel);
 		}
 	}
 

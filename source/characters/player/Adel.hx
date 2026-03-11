@@ -1,8 +1,11 @@
 package characters.player;
 
+import characters.enemies.Enemy;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
 
 enum AdelStates
 {
@@ -27,8 +30,8 @@ class Adel extends FlxSprite
     // Direction
     public var direction = 1; // public because held enemies
 
-    // Holding Enemies (thanks anatolystev) (dont uncomment until held enemies are added!!!!)
-    // public var heldEnemy:Enemy = null;
+    // Holding Enemies (thanks anatolystev)
+    public var heldEnemy:Enemy = null;
 
     // Self-explanatory
     public var currentState = Normal;
@@ -39,6 +42,11 @@ class Adel extends FlxSprite
 
     // Cutscene
     public var inCutscene = false;
+
+    // Invincibility Powerup
+    var herringDuration = 14.0;
+    public var invincible = false;
+    var stars:FlxSprite;
 
     // Spritesheet
     var image = FlxAtlasFrames.fromSparrow("assets/images/characters/player/adel.png", "assets/images/characters/player/adel.xml");
@@ -81,7 +89,7 @@ class Adel extends FlxSprite
             // Kill Adel when she falls into the void
             if (y > Global.PS.map.height - height)
             {
-                // die();
+                die();
             }
 
             move();
@@ -158,4 +166,129 @@ class Adel extends FlxSprite
         }
     }
 
+    public function holdEnemy(enemy:Enemy)
+    {
+        // If there's already a held enemy, return.
+        if (heldEnemy != null)
+        {
+            return;
+        }
+
+        // If there's no held enemy and player is pressing control, pick up enemy.
+        if (FlxG.keys.pressed.CONTROL)
+        {
+            heldEnemy = enemy;
+            enemy.pickUp(this);
+        }
+    }
+
+    public function throwEnemy()
+    {
+        // If there's no held enemy, return.
+        if (heldEnemy == null)
+        {
+            return;
+        }
+
+        // Throw enemy
+        heldEnemy.enemyThrow();
+        heldEnemy = null;
+    }
+
+    public function takeDamage(damageAmount:Int)
+    {
+        // Shakes the camera, decreases health, plays a sound and does invincibility frames stuff. If Adel's health is 1 and he gets damaged, she dies.
+        if (canTakeDamage)
+        {
+            if (currentState == Bomb)
+            {
+                currentState = Normal;
+                reloadGraphics();
+            }
+
+            FlxTween.flicker(this, invFrames, 0.1, {type: ONESHOT});
+            Global.PS.camera.shake(0.05, 0.1);
+            canTakeDamage = false;
+            Global.health -= damageAmount;
+
+            FlxG.sound.play("assets/sounds/adelhurt.ogg");
+
+            new FlxTimer().start(invFrames, function(_) 
+            {
+                canTakeDamage = true;
+            }, 1);
+
+            if (Global.health <= 0)
+            {
+                die();
+            }
+        }
+    }
+
+    public function heal(healAmount:Int)
+    {
+        // If Global.health is less than Global.maxHealth, increase health by healAmount.
+        if (Global.health < Global.maxHealth)
+        {
+            Global.health += healAmount;
+        }
+    }
+
+    // Adel dies, will likely be changed to be a death animation similar to Super Mario Bros.
+    public function die()
+    {
+        FlxG.resetState();
+        currentState = Normal;
+        reloadGraphics();
+        Global.health = Global.maxHealth;
+    }
+
+    public function reloadGraphics()
+    {
+        animation.reset();
+
+        switch(currentState)
+        {
+            case Normal:
+                // Spritesheet
+                var fixedMaybeOne = FlxAtlasFrames.fromSparrow("assets/images/characters/player/adel.png", "assets/images/characters/player/adel.xml");
+                frames = fixedMaybeOne;
+                animation.addByPrefix("stand", "stand", false);
+                animation.addByPrefix("walk", "walk", 8, true);
+                animation.addByPrefix("jump", "jump", 8, false);
+                animation.addByPrefix("prepare", "prepare", 8, false);
+                animation.addByPrefix("sit", "sit", 8, false);
+                animation.addByPrefix("angry", "angry", 8, false);
+                animation.addByPrefix("blink", "blink", 8, false);
+                animation.addByPrefix("dash", "dash", 8, false);
+
+                // i genuinely dont know whether this fixed a crash or not (context: game was crashing)
+                setSize(30, 58);
+                offset.set(10, 22);
+
+            case Bomb:
+                // Spritesheet
+                var fixedMaybeTwo = FlxAtlasFrames.fromSparrow("assets/images/characters/player/nuclear_adel.png", "assets/images/characters/player/nuclear_adel.xml");
+                frames = fixedMaybeTwo;
+                animation.addByPrefix("stand", "stand", false);
+                animation.addByPrefix("walk", "walk", 8, true);
+                animation.addByPrefix("jump", "jump", 8, false);
+                animation.addByPrefix("prepare", "prepare", 8, false);
+                animation.addByPrefix("sit", "sit", 8, false);
+                animation.addByPrefix("angry", "angry", 8, false);
+                animation.addByPrefix("blink", "blink", 8, false);
+                animation.addByPrefix("dash", "dash", 8, false);
+
+                // i genuinely dont know whether this fixed a crash or not (context: game was crashing)
+                setSize(30, 58);
+                offset.set(10, 22);
+        }
+    }
+
+    // what an odd thing to say
+    public function bombAdel()
+    {
+        currentState = Bomb;
+        reloadGraphics();
+    }
 }

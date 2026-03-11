@@ -62,7 +62,7 @@ class MainMenuState extends FlxState
         remove(playButton, true);
 
         // Switch State
-        FlxG.switchState(PlayState.new);
+        FlxG.switchState(PresentIntroState.new);
     }
 
     function clickEraseSave()

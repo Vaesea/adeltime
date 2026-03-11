@@ -1,5 +1,6 @@
 package;
 
+import characters.enemies.as.Snowmangry;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
 import flixel.addons.editors.tiled.TiledImageLayer;
@@ -76,6 +77,15 @@ class LevelLoader extends FlxState
                     state.solidThings.add(goalSquare);
                 case "checkpoint":
                     state.checkpoint = new FlxPoint(solid.x, solid.y - 32);
+            }
+        }
+
+        for (object in getLevelObjects(tiledMap, "Enemies"))
+        {
+            switch (object.type)
+            {
+                case "snowmangry":
+                    state.enemies.add(new Snowmangry(object.x, object.y - 78));
             }
         }
 
