@@ -19,3 +19,9 @@ This is inspired by Turrican II, Sonic 2's Scrapped Time Travel story and Super 
 - Vaesea - Art, Code, Music, Test Level
 - AnatolyStev - Code
 - Discover HaxeFlixel - Code (to be honest, i think the code is a bit further away from discover haxeflixel now and it's more it's own thing)
+- deleted_user_4541234 - Kick sound effect
+- HighPixel - Fireball sound effect
+- SamsterBirdies - Explosion sound effect
+- johnthewizar - Snare sound effect
+- ErrorCell - Snare sound effect 2
+- DeltaCode - Impact sound effect
