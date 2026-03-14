@@ -1,5 +1,6 @@
 package;
 
+import characters.enemies.as.Empeguin;
 import characters.enemies.as.Rollball;
 import characters.enemies.as.Snowmangry;
 import flixel.FlxState;
@@ -89,6 +90,8 @@ class LevelLoader extends FlxState
                     state.enemies.add(new Snowmangry(object.x, object.y - 78));
                 case "rollball":
                     state.enemies.add(new Rollball(object.x, object.y - 28));
+                case "empeguin":
+                    state.enemies.add(new Empeguin(object.x, object.y - 84));
             }
         }
 

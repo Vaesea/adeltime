@@ -94,7 +94,7 @@ class Enemy extends FlxSprite
             move();
         }
 
-        if (canBeHeld == true)
+        if (canBeHeld)
         {
             if (currentHeldEnemyState == Held && held != null)
             {

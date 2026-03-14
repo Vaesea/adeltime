@@ -21,8 +21,8 @@ class Rollball extends Enemy
         flipX = true;
 
         // Animations
-        animation.addByPrefix('walk', 'roll', 12, true);
-        animation.addByPrefix('squished', 'dead', 12, false);
+        animation.addByPrefix('walk', 'roll', 14, true);
+        animation.addByPrefix('squished', 'dead', 14, false);
         animation.play('walk');
 
         // Hitbox

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="empeguin.png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="stand0000" x="0" y="96" width="80" height="98" frameX="-1" frameY="0" frameWidth="96" frameHeight="96"/>
+	<SubTexture name="throw0000" x="0" y="0" width="83" height="96" frameX="-1" frameY="-2" frameWidth="96" frameHeight="96"/>
+	<SubTexture name="throw0001" x="83" y="0" width="79" height="98" frameX="-1" frameY="0" frameWidth="96" frameHeight="96"/>
+	<SubTexture name="throw0002" x="162" y="0" width="77" height="97" frameX="-1" frameY="-1" frameWidth="96" frameHeight="96"/>
+	<SubTexture name="throw0003" x="162" y="97" width="74" height="95" frameX="-1" frameY="-3" frameWidth="96" frameHeight="96"/>
+	<SubTexture name="throw0004" x="239" y="83" width="71" height="93" frameX="-1" frameY="-5" frameWidth="96" frameHeight="96"/>
+	<SubTexture name="fall0000" x="239" y="0" width="81" height="83" frameX="-1" frameY="-15" frameWidth="96" frameHeight="96"/>
+</TextureAtlas>
